@@ -14,6 +14,19 @@ export default {
     };
   },
   components: { TypingTestCard },
+  methods: {
+    fetchText() {
+      fetch("http://metaphorpsum.com/paragraphs/1/4")
+        .then((res) => res.text())
+        .then((data) => {
+          this.text = data;
+        })
+        .catch(console.log);
+    },
+  },
+  mounted() {
+    this.fetchText();
+  },
 };
 </script>
 
