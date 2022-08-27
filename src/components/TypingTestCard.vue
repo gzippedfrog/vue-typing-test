@@ -1,23 +1,29 @@
 <template>
   <div class="card text-bg-light mt-3 shadow-sm">
     <div class="card-body">
-      <p class="card-text" ref="text">
+      <p class="card-text mono-text" ref="text">
         <span v-for="[char, i] in chars" :key="i"> {{ char }} </span>
       </p>
 
-      <p v-show="typedLength" class="card-text">
-        <span class="row fw-bold">
-          <span class="col">Accuracy: </span>
-          <span class="col">Speed: </span>
-        </span>
-        <span class="row">
-          <span class="col">{{ accuracy }}%</span>
-          <span class="col">{{ typingSpeed }} chars/min</span>
-        </span>
-      </p>
-      <button type="button" class="btn btn-warning shadow-sm" @click="restart">
-        Restart
-      </button>
+      <div class="card-text container">
+        <div class="row">
+          <div :class="[{ hidden: !typedLength }, 'col']">
+            <div class="row fw-bold">Accuracy:</div>
+            <div class="row">{{ accuracy }}%</div>
+          </div>
+          <div :class="[{ hidden: !typedLength }, 'col']">
+            <div class="row fw-bold">Speed:</div>
+            <div class="row">{{ typingSpeed }} chars/min</div>
+          </div>
+          <button
+            type="button"
+            class="btn btn-warning shadow-sm col"
+            @click="restart"
+          >
+            Restart
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -121,11 +127,21 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "node_modules/bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 .card {
-  max-width: 500px;
+  width: 500px;
+}
+
+.mono-text {
+  font-family: "Roboto Mono", monospace;
+  white-space: pre-wrap;
+}
+
+.hidden {
+  opacity: 0;
 }
 
 .success {
