@@ -158,7 +158,8 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 .card {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .mono-text {

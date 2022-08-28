@@ -45,7 +45,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   background-color: $gray-300;
   height: 100%;
-  padding-top: 60px;
+  padding: 60px 10px 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
