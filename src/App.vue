@@ -1,6 +1,11 @@
 <template>
   <h1>Test your typing speed</h1>
-  <TypingTestCard :text="text" @restart="fetchText" :loading="loading" :key="text" />
+  <TypingTestCard
+    :text="text"
+    :loading="loading"
+    @restart="fetchText"
+    :key="text"
+  />
 </template>
 
 <script>
@@ -8,13 +13,13 @@ import TypingTestCard from "./components/TypingTestCard.vue";
 
 export default {
   name: "App",
+  components: { TypingTestCard },
   data() {
     return {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla mollitia vitae voluptatem necessitatibus accusantium laboriosam rerum aspernatur? Repudiandae voluptatum ducimus quod, perspiciatis nisi esse porro doloribus, consequuntur voluptas aliquam incidunt excepturi.",
+      text: "",
       loading: false,
     };
   },
-  components: { TypingTestCard },
   methods: {
     fetchText() {
       this.loading = true;

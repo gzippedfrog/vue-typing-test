@@ -29,7 +29,7 @@
           </div>
           <button
             type="button"
-            class="btn btn-warning shadow-sm col"
+            class="btn btn-warning btn-restart shadow-sm col"
             @click="restart"
           >
             Restart
@@ -59,6 +59,11 @@
 <script>
 export default {
   name: "TypingTestCard",
+  props: {
+    text: String,
+    loading: Boolean,
+  },
+  emits: ["restart"],
   data() {
     return {
       typedChars: [],
@@ -69,7 +74,6 @@ export default {
       completed: false,
     };
   },
-  props: ["text", "loading"],
   computed: {
     chars() {
       return this.text.split("");
@@ -92,15 +96,14 @@ export default {
     },
   },
   methods: {
-    handleKeyDown(e) {
+    handleKeyDown({ key }) {
       if (this.completed) return;
-
-      if (e.key === "Backspace" && this.currentIndx > 0) {
+      if (key === "Backspace" && this.typedLength > 0) {
         this.typedChars.pop();
         this.currentIndx--;
-      } else if (e.key.length === 1 && this.typedLength < this.text.length) {
+      } else if (key.length === 1 && this.typedLength < this.text.length) {
         !this.timerId && this.startTest();
-        this.typedChars.push(e.key);
+        this.typedChars.push(key);
         this.currentIndx++;
       }
     },
@@ -111,13 +114,12 @@ export default {
     },
     restart() {
       clearInterval(this.timerId);
-
       this.$emit("restart");
     },
   },
   mounted() {
     window.onkeydown = this.handleKeyDown;
-    this.charElems[this.currentIndx].className = "current";
+    this.charElems[0]?.classList.add("current");
   },
   unmounted() {
     window.onkeydown = null;
@@ -144,9 +146,8 @@ export default {
       deep: true,
     },
     currentIndx(i, prevI) {
-      if (this.charElems[i]) {
-        this.charElems[i].className = "current";
-      }
+      this.charElems[i]?.classList.add("current");
+      this.charElems[i]?.classList.remove("success", "error");
       this.charElems[prevI]?.classList.remove("current");
     },
   },
@@ -184,5 +185,14 @@ export default {
 .current {
   color: $yellow-600;
   background-color: $yellow-200;
+}
+
+.btn-restart {
+  min-width: fit-content;
+  align-self: baseline;
+}
+
+.row {
+  gap: 10px;
 }
 </style>
