@@ -1,6 +1,6 @@
 <template>
   <h1>Test your typing speed</h1>
-  <TypingTestCard :text="text" @restart="fetchText" :key="text" />
+  <TypingTestCard :text="text" @restart="fetchText" :loading="loading" :key="text" />
 </template>
 
 <script>
@@ -11,17 +11,22 @@ export default {
   data() {
     return {
       text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla mollitia vitae voluptatem necessitatibus accusantium laboriosam rerum aspernatur? Repudiandae voluptatum ducimus quod, perspiciatis nisi esse porro doloribus, consequuntur voluptas aliquam incidunt excepturi.",
+      loading: false,
     };
   },
   components: { TypingTestCard },
   methods: {
     fetchText() {
+      this.loading = true;
       fetch("http://metaphorpsum.com/paragraphs/1/4")
         .then((res) => res.text())
         .then((data) => {
           this.text = data;
         })
-        .catch(console.log);
+        .catch(console.log)
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
   mounted() {
