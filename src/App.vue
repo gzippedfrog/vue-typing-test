@@ -23,7 +23,7 @@ export default {
   methods: {
     fetchText() {
       this.loading = true;
-      fetch("http://metaphorpsum.com/paragraphs/1/4")
+      fetch("https://baconipsum.com/api/?type=all-meat&sentences=3&format=text")
         .then((res) => res.text())
         .then((data) => {
           this.text = data;

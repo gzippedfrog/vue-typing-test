@@ -19,13 +19,17 @@
 
       <div class="card-text container">
         <div class="row">
-          <div :class="[{ hidden: !typedLength }, 'col']">
-            <div class="row fw-bold">Accuracy:</div>
-            <div class="row">{{ accuracy }}%</div>
+          <div class="col">
+            <template v-if="typedLength">
+              <div class="row fw-bold">Accuracy:</div>
+              <div class="row">{{ accuracy }}%</div>
+            </template>
           </div>
-          <div :class="[{ hidden: !typedLength }, 'col']">
-            <div class="row fw-bold">Speed:</div>
-            <div class="row">{{ typingSpeed }} chars/min</div>
+          <div class="col">
+            <template v-if="typedLength">
+              <div class="row fw-bold">Speed:</div>
+              <div class="row">{{ typingSpeed }} chars/min</div>
+            </template>
           </div>
           <button
             type="button"
@@ -60,7 +64,10 @@
 export default {
   name: "TypingTestCard",
   props: {
-    text: String,
+    text: {
+      type: String,
+      required: true,
+    },
     loading: Boolean,
   },
   emits: ["restart"],
